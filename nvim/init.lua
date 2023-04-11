@@ -1,0 +1,7 @@
+require("plugins")
+require("p-mason")
+require("p-lsp")
+require("base")
+require("maps")
+-- require("p-cmp")
+-- require("debugging")
