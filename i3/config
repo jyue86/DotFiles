@@ -16,7 +16,8 @@ set $mod Mod4
 # font pango:monospace 8
 font pango:Hack Nerd Font Complete 10
 # i3-msg[class=.*] border pixel 1
-for_window[class=".*"]border pixel 4
+# for_window[class=".*"]border pixel 4
+for_window[class=".*"]border pixel 2
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -31,7 +32,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -t -i ~/Pictures/lockscreen_imgs/i3-lockv3.png
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -t -i ~/Pictures/lockscreen_imgs/subaru_brz.png
 
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
@@ -49,9 +50,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-# bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec alacritty
 # bindsym $mod+Return exec kitty -o allow_remote_control=yes --listen-on=unix:@"$(date +%s%N)"
-bindsym $mod+Return exec kitty
+# bindsym $mod+Return exec wezterm 
 # kill focused window
 bindsym $mod+q kill
 
@@ -73,12 +74,6 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up 
 bindsym $mod+l focus right 
 bindsym $mod+h focus left 
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -161,7 +156,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Shift+x exec --no-startup-id i3lock -t -i ~/Pictures/lockscreen_imgs/i3-lockv3.png
+bindsym $mod+Shift+x exec --no-startup-id i3lock -t -i ~/Pictures/lockscreen_imgs/subaru_brz.png
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -176,12 +171,6 @@ mode "resize" {
         bindsym j resize shrink height 10 px or 10 ppt
         bindsym l resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -191,7 +180,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Polybar
-gaps top 32px
+gaps top 34px
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -203,10 +192,13 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 # }
 
 # Gaps!!!
-gaps inner 7px
+gaps inner 4px
 
 # Background
-exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/aerial-gundam-witch.jpg
+# exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/aerial-gundam-witch.jpg
+# exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/aerial_final_boss.png
+# exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/subaru_brz.jpg
+exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/86_shin.jpeg
 
 # Picom
 exec_always --no-startup-id picom -b --experimental-backend --config ~/.config/picom/picom.conf
@@ -215,10 +207,27 @@ exec_always --no-startup-id picom -b --experimental-backend --config ~/.config/p
 # class                 border  backgr. text    indicator child_border
 client.focused          #4c7899 #21c7a8 #000000 #21c7a8   #21c7a8 
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-client.unfocused        #333333 #e3d18a #888888 #e3d18a   #e3d18a
+client.unfocused        #333333 #7c8f8f #888888 #7c8f8f   #7c8f8f
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 # Original green color - #42f55a
 
-# Screenshot w/ maim
-bindsym $mod+Shift+s exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
+# Screenshot 
+bindsym $mod+Shift+s exec --no-startup-id flameshot gui --clipboard --path ~/Pictures/Screenshots
+
+# Play-pause b/c system76 keyboard configurator doesn't work for some reason
+bindsym $mod+Down exec --no-startup-id playerctl play-pause
+# bindsym XF86AudioPlayPause exec --no-startup-id playerctl play-pause
+# bindsym XF86AudioPlay exec --no-startup-id playerctl play
+# bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+# bindsym XF86AudioNext exec --nostartup-id playerctl next
+# bindsym XF86AudioPrev exec --nostartup-id playerctl previous
+
+# Set C++ pop ups to float
+# for_window [class="Main"] floating enable
+for_window [class="zoom"] floating enable
+for_window [class="zoom" title="Zoom - Licensed Account"] floating disable
+for_window [class="zoom" title="Zoom Meeting"] floating disable
+
+# redshift
+# exec_always --no-startup-id redshift ~/.config/redshift/redshift.conf
